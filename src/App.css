@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&family=BIZ+UDMincho&family=M+PLUS+1p:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;700&family=Yomogi&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&family=BIZ+UDMincho&family=M+PLUS+1p:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;700&family=Yomogi&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 /* === THEME VARIABLES === */
 :root[data-theme="dark"] {
   --bg: #0e0e10;
   --bg2: #18181c;
   --bg3: #22222a;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.14);
+  --border: rgba(255, 255, 255, 0.08);
+  --border2: rgba(255, 255, 255, 0.14);
   --text: #f0f0f2;
   --text2: #a0a0b0;
   --text3: #606070;
@@ -14,19 +14,20 @@
   --accent2: #9b8dff;
   --correct: #3ecf8e;
   --wrong: #f06060;
+  --feedback-wrong: #cdf2533e;
   --correct-bg: rgba(62, 207, 142, 0.12);
   --wrong-bg: rgba(240, 96, 96, 0.12);
   --check-bg: rgba(124, 108, 250, 0.15);
   --check-border: rgba(124, 108, 250, 0.4);
-  --shadow: 0 8px 40px rgba(0,0,0,0.5);
+  --shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
 :root[data-theme="light"] {
   --bg: #f5f4f0;
   --bg2: #ffffff;
   --bg3: #eeecea;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.14);
+  --border: rgba(0, 0, 0, 0.08);
+  --border2: rgba(0, 0, 0, 0.14);
   --text: #1a1a1e;
   --text2: #606070;
   --text3: #a0a0b0;
@@ -38,17 +39,23 @@
   --wrong-bg: rgba(217, 64, 64, 0.1);
   --check-bg: rgba(92, 78, 240, 0.08);
   --check-border: rgba(92, 78, 240, 0.3);
-  --shadow: 0 4px 24px rgba(0,0,0,0.1);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   min-height: 100vh;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 /* === HEADER === */
@@ -72,7 +79,7 @@ body {
 }
 
 .logo {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--accent);
@@ -116,8 +123,14 @@ body {
   transition: all 0.15s;
 }
 
-.font-btn:hover { background: var(--bg2); color: var(--text); }
-.font-btn.active { background: var(--accent); color: white; }
+.font-btn:hover {
+  background: var(--bg2);
+  color: var(--text);
+}
+.font-btn.active {
+  background: var(--accent);
+  color: white;
+}
 
 /* === THEME BUTTON === */
 .theme-btn {
@@ -135,7 +148,10 @@ body {
   transition: all 0.15s;
 }
 
-.theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+.theme-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 
 /* === MAIN LAYOUT === */
 .main {
@@ -208,7 +224,9 @@ body {
   border-radius: 14px;
   border: 2px solid var(--border2);
   margin-bottom: 1.5rem;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
   position: relative;
   overflow: hidden;
 }
@@ -227,7 +245,9 @@ body {
   font-size: 8rem;
   line-height: 1;
   color: var(--text);
-  transition: transform 0.15s, opacity 0.15s;
+  transition:
+    transform 0.15s,
+    opacity 0.15s;
   user-select: none;
 }
 
@@ -256,7 +276,7 @@ body {
   color: var(--wrong);
   text-align: center;
   padding: 0.5rem 1rem;
-  background: var(--wrong-bg);
+  background: var(--feedback-wrong);
   border-radius: 8px;
 }
 
@@ -268,9 +288,17 @@ body {
 }
 
 @keyframes pop {
-  0% { transform: scale(0.5); opacity: 0; }
-  60% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* === INPUT FORM === */
@@ -286,7 +314,7 @@ body {
   border: 1.5px solid var(--border2);
   border-radius: 10px;
   color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 1.1rem;
   padding: 0 1rem;
   outline: none;
@@ -298,9 +326,15 @@ body {
   background: var(--check-bg);
 }
 
-.kana-input.correct { border-color: var(--correct); }
-.kana-input.wrong { border-color: var(--wrong); }
-.kana-input:disabled { opacity: 0.5; }
+.kana-input.correct {
+  border-color: var(--correct);
+}
+.kana-input.wrong {
+  border-color: var(--wrong);
+}
+.kana-input:disabled {
+  opacity: 0.5;
+}
 
 .submit-btn {
   height: 48px;
@@ -309,18 +343,29 @@ body {
   color: white;
   border: none;
   border-radius: 10px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
   white-space: nowrap;
 }
 
-.submit-btn:hover:not(:disabled) { opacity: 0.85; }
-.submit-btn:active:not(:disabled) { transform: scale(0.97); }
-.submit-btn:disabled { opacity: 0.3; cursor: default; }
-.submit-btn.retry { background: var(--wrong); }
+.submit-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.submit-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.submit-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.submit-btn.retry {
+  background: var(--wrong);
+}
 
 /* === EMPTY STATE === */
 .empty-state {
@@ -368,7 +413,7 @@ body {
 }
 
 .kana-label {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-size: 0.85rem;
   color: var(--accent);
 }
@@ -386,7 +431,7 @@ body {
   background: transparent;
   color: var(--text2);
   cursor: pointer;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   transition: all 0.12s;
 }
 
@@ -414,7 +459,9 @@ body {
   border: 1px solid transparent;
 }
 
-.group-item:hover { background: var(--bg3); }
+.group-item:hover {
+  background: var(--bg3);
+}
 
 .group-item.checked {
   background: var(--check-bg);
@@ -436,7 +483,7 @@ body {
 }
 
 .preview-kana {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-size: 1rem;
   color: var(--text);
   opacity: 0.8;

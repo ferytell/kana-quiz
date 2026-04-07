@@ -13,8 +13,12 @@ function shuffleArr(arr) {
 }
 
 export default function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
-  const [activeFont, setActiveFont] = useState(() => localStorage.getItem("font") || "default");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "dark",
+  );
+  const [activeFont, setActiveFont] = useState(
+    () => localStorage.getItem("font") || "default",
+  );
 
   const [enabledHiraganaGroups, setEnabledHiraganaGroups] = useState(() => {
     const s = localStorage.getItem("hiraganaGroups");
@@ -30,7 +34,9 @@ export default function App() {
   const [status, setStatus] = useState("idle"); // idle | correct | wrong
   const [wrongAnswer, setWrongAnswer] = useState("");
   const [streak, setStreak] = useState(0);
-  const [bestStreak, setBestStreak] = useState(() => parseInt(localStorage.getItem("bestStreak") || "0"));
+  const [bestStreak, setBestStreak] = useState(() =>
+    parseInt(localStorage.getItem("bestStreak") || "0"),
+  );
   const [totalAnswered, setTotalAnswered] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
 
@@ -38,15 +44,22 @@ export default function App() {
 
   const getPool = useCallback(() => {
     const pool = [];
-    hiragana.forEach(k => { if (enabledHiraganaGroups.includes(k.group)) pool.push(k); });
-    katakana.forEach(k => { if (enabledKatakanaGroups.includes(k.group)) pool.push(k); });
+    hiragana.forEach((k) => {
+      if (enabledHiraganaGroups.includes(k.group)) pool.push(k);
+    });
+    katakana.forEach((k) => {
+      if (enabledKatakanaGroups.includes(k.group)) pool.push(k);
+    });
     return pool;
   }, [enabledHiraganaGroups, enabledKatakanaGroups]);
 
   const nextCard = useCallback(() => {
     const pool = getPool();
-    if (pool.length === 0) { setCurrent(null); return; }
-    const font = fonts.find(f => f.id === activeFont) || fonts[0];
+    if (pool.length === 0) {
+      setCurrent(null);
+      return;
+    }
+    const font = fonts.find((f) => f.id === activeFont) || fonts[0];
     const card = pickRandom(pool);
     setCurrent({ ...card, fontFamily: font.family });
     setInput("");
@@ -68,24 +81,57 @@ export default function App() {
   }, [activeFont]);
 
   useEffect(() => {
-    localStorage.setItem("hiraganaGroups", JSON.stringify(enabledHiraganaGroups));
+    localStorage.setItem(
+      "hiraganaGroups",
+      JSON.stringify(enabledHiraganaGroups),
+    );
   }, [enabledHiraganaGroups]);
 
   useEffect(() => {
-    localStorage.setItem("katakanaGroups", JSON.stringify(enabledKatakanaGroups));
+    localStorage.setItem(
+      "katakanaGroups",
+      JSON.stringify(enabledKatakanaGroups),
+    );
   }, [enabledKatakanaGroups]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!current || status !== "idle") return;
+    if (!current) return;
+
     const answer = input.trim().toLowerCase();
     const correct = current.romaji.toLowerCase();
-    setTotalAnswered(t => t + 1);
+
+    // Allow retry on wrong answer without resetting status
+    if (status === "wrong") {
+      // Just check again with current input
+      if (answer === correct) {
+        setStatus("correct");
+        const newStreak = streak + 1;
+        setStreak(newStreak);
+        setTotalCorrect((t) => t + 1);
+        if (newStreak > bestStreak) {
+          setBestStreak(newStreak);
+          localStorage.setItem("bestStreak", String(newStreak));
+        }
+        setTotalAnswered((t) => t + 1);
+        setTimeout(() => nextCard(), 500);
+      } else {
+        // Still wrong, update wrong answer display
+        setWrongAnswer(answer);
+        setInput(""); // Clear input for next attempt
+      }
+      return;
+    }
+
+    // Normal submission for idle status
+    if (status !== "idle") return;
+
+    setTotalAnswered((t) => t + 1);
     if (answer === correct) {
       setStatus("correct");
       const newStreak = streak + 1;
       setStreak(newStreak);
-      setTotalCorrect(t => t + 1);
+      setTotalCorrect((t) => t + 1);
       if (newStreak > bestStreak) {
         setBestStreak(newStreak);
         localStorage.setItem("bestStreak", String(newStreak));
@@ -95,34 +141,42 @@ export default function App() {
       setStatus("wrong");
       setWrongAnswer(answer);
       setStreak(0);
+      setInput(""); // Clear input so user can type new answer
+      setTimeout(() => inputRef.current?.focus(), 50); // Keep focus on input
     }
   };
 
   const handleWrongRetry = () => {
     setInput("");
     setStatus("idle");
-    setTimeout(() => inputRef.current?.focus(), 50);
+    // setTimeout(() => inputRef.current?.focus(), 50);
   };
 
   const toggleGroup = (type, group) => {
     if (type === "hiragana") {
-      setEnabledHiraganaGroups(prev =>
-        prev.includes(group) ? prev.filter(g => g !== group) : [...prev, group]
+      setEnabledHiraganaGroups((prev) =>
+        prev.includes(group)
+          ? prev.filter((g) => g !== group)
+          : [...prev, group],
       );
     } else {
-      setEnabledKatakanaGroups(prev =>
-        prev.includes(group) ? prev.filter(g => g !== group) : [...prev, group]
+      setEnabledKatakanaGroups((prev) =>
+        prev.includes(group)
+          ? prev.filter((g) => g !== group)
+          : [...prev, group],
       );
     }
   };
 
   const toggleAll = (type, val) => {
-    if (type === "hiragana") setEnabledHiraganaGroups(val ? [...ALL_GROUPS] : []);
+    if (type === "hiragana")
+      setEnabledHiraganaGroups(val ? [...ALL_GROUPS] : []);
     else setEnabledKatakanaGroups(val ? [...ALL_GROUPS] : []);
   };
 
   const pool = getPool();
-  const accuracy = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : null;
+  const accuracy =
+    totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : null;
 
   return (
     <div className="app">
@@ -133,11 +187,13 @@ export default function App() {
         </div>
         <div className="header-right">
           <div className="font-picker">
-            {fonts.map(f => (
+            {fonts.map((f) => (
               <button
                 key={f.id}
                 className={`font-btn ${activeFont === f.id ? "active" : ""}`}
-                onClick={() => { setActiveFont(f.id); }}
+                onClick={() => {
+                  setActiveFont(f.id);
+                }}
                 title={f.label}
                 style={{ fontFamily: f.family }}
               >
@@ -145,7 +201,11 @@ export default function App() {
               </button>
             ))}
           </div>
-          <button className="theme-btn" onClick={() => setTheme(t => t === "dark" ? "light" : "dark")} title="Toggle theme">
+          <button
+            className="theme-btn"
+            onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+            title="Toggle theme"
+          >
             {theme === "dark" ? "☀" : "☽"}
           </button>
         </div>
@@ -154,10 +214,24 @@ export default function App() {
       <main className="main">
         <div className="quiz-panel">
           <div className="stats-row">
-            <div className="stat"><span className="stat-val">{streak}</span><span className="stat-label">Streak</span></div>
-            <div className="stat"><span className="stat-val">{bestStreak}</span><span className="stat-label">Best</span></div>
-            <div className="stat"><span className="stat-val">{accuracy !== null ? accuracy + "%" : "—"}</span><span className="stat-label">Accuracy</span></div>
-            <div className="stat"><span className="stat-val">{pool.length}</span><span className="stat-label">Pool</span></div>
+            <div className="stat">
+              <span className="stat-val">{streak}</span>
+              <span className="stat-label">Streak</span>
+            </div>
+            <div className="stat">
+              <span className="stat-val">{bestStreak}</span>
+              <span className="stat-label">Best</span>
+            </div>
+            <div className="stat">
+              <span className="stat-val">
+                {accuracy !== null ? accuracy + "%" : "—"}
+              </span>
+              <span className="stat-label">Accuracy</span>
+            </div>
+            <div className="stat">
+              <span className="stat-val">{pool.length}</span>
+              <span className="stat-label">Pool</span>
+            </div>
           </div>
 
           {pool.length === 0 ? (
@@ -169,15 +243,24 @@ export default function App() {
             <>
               <div className={`kana-display ${status}`}>
                 {current && (
-                  <span className="kana-char" style={{ fontFamily: current.fontFamily }}>
+                  <span
+                    className="kana-char"
+                    style={{ fontFamily: current.fontFamily }}
+                  >
                     {current.kana}
                   </span>
                 )}
-                {status === "correct" && <div className="feedback correct-feedback">✓</div>}
+                {status === "correct" && (
+                  <div className="feedback correct-feedback">✓</div>
+                )}
                 {status === "wrong" && (
                   <div className="feedback wrong-feedback">
-                    <span>✗ You typed: <strong>{wrongAnswer}</strong></span>
-                    <span className="correct-hint">Correct: <strong>{current?.romaji}</strong></span>
+                    <span>
+                      ✗ You typed: <strong>{wrongAnswer}</strong>
+                    </span>
+                    <span className="correct-hint">
+                      Correct: <strong>{current?.romaji}</strong>
+                    </span>
                   </div>
                 )}
               </div>
@@ -188,18 +271,20 @@ export default function App() {
                   className={`kana-input ${status}`}
                   type="text"
                   value={input}
-                  onChange={e => setInput(e.target.value)}
+                  onChange={(e) => setInput(e.target.value)}
                   placeholder="Type romaji..."
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck="false"
                   disabled={status === "correct"}
                 />
-                {status === "wrong" ? (
-                  <button type="button" className="submit-btn retry" onClick={handleWrongRetry}>Try again</button>
-                ) : (
-                  <button type="submit" className="submit-btn" disabled={!input.trim() || status === "correct"}>Check</button>
-                )}
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  disabled={!input.trim() && status !== "wrong"} // Allow empty input when status is wrong
+                >
+                  {status === "wrong" ? "Try Again" : "Check"}
+                </button>
               </form>
             </>
           )}
@@ -208,26 +293,35 @@ export default function App() {
         <div className="selector-panel">
           <div className="selector-section">
             <div className="section-header">
-              <h2>Hiragana <span className="kana-label">ひらがな</span></h2>
+              <h2>
+                Hiragana <span className="kana-label">ひらがな</span>
+              </h2>
               <div className="toggle-all-btns">
                 <button onClick={() => toggleAll("hiragana", true)}>All</button>
-                <button onClick={() => toggleAll("hiragana", false)}>None</button>
+                <button onClick={() => toggleAll("hiragana", false)}>
+                  None
+                </button>
               </div>
             </div>
             <div className="group-list">
-              {ALL_GROUPS.map(group => {
-                const chars = hiragana.filter(k => k.group === group);
+              {ALL_GROUPS.map((group) => {
+                const chars = hiragana.filter((k) => k.group === group);
                 const checked = enabledHiraganaGroups.includes(group);
                 return (
-                  <label key={group} className={`group-item ${checked ? "checked" : ""}`}>
+                  <label
+                    key={group}
+                    className={`group-item ${checked ? "checked" : ""}`}
+                  >
                     <input
                       type="checkbox"
                       checked={checked}
                       onChange={() => toggleGroup("hiragana", group)}
                     />
                     <div className="group-kana">
-                      {chars.slice(0, 5).map(k => (
-                        <span key={k.kana} className="preview-kana">{k.kana}</span>
+                      {chars.slice(0, 5).map((k) => (
+                        <span key={k.kana} className="preview-kana">
+                          {k.kana}
+                        </span>
                       ))}
                     </div>
                     <span className="group-label">{groupLabels[group]}</span>
@@ -239,26 +333,35 @@ export default function App() {
 
           <div className="selector-section">
             <div className="section-header">
-              <h2>Katakana <span className="kana-label">カタカナ</span></h2>
+              <h2>
+                Katakana <span className="kana-label">カタカナ</span>
+              </h2>
               <div className="toggle-all-btns">
                 <button onClick={() => toggleAll("katakana", true)}>All</button>
-                <button onClick={() => toggleAll("katakana", false)}>None</button>
+                <button onClick={() => toggleAll("katakana", false)}>
+                  None
+                </button>
               </div>
             </div>
             <div className="group-list">
-              {ALL_GROUPS.map(group => {
-                const chars = katakana.filter(k => k.group === group);
+              {ALL_GROUPS.map((group) => {
+                const chars = katakana.filter((k) => k.group === group);
                 const checked = enabledKatakanaGroups.includes(group);
                 return (
-                  <label key={group} className={`group-item ${checked ? "checked" : ""}`}>
+                  <label
+                    key={group}
+                    className={`group-item ${checked ? "checked" : ""}`}
+                  >
                     <input
                       type="checkbox"
                       checked={checked}
                       onChange={() => toggleGroup("katakana", group)}
                     />
                     <div className="group-kana">
-                      {chars.slice(0, 5).map(k => (
-                        <span key={k.kana} className="preview-kana">{k.kana}</span>
+                      {chars.slice(0, 5).map((k) => (
+                        <span key={k.kana} className="preview-kana">
+                          {k.kana}
+                        </span>
                       ))}
                     </div>
                     <span className="group-label">{groupLabels[group]}</span>
