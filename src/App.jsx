@@ -3,9 +3,17 @@ import { hiragana, katakana, groupLabels, fonts } from "./kanaData";
 import "./App.css";
 
 const ALL_GROUPS = Object.keys(groupLabels);
-
+let lastPicked = null;
 function pickRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+  let picked;
+
+  do {
+    picked = arr[Math.floor(Math.random() * arr.length)];
+  } while (picked === lastPicked && arr.length > 1); // Avoid same as last if possible
+
+  lastPicked = picked;
+  console.log("Picked:", picked);
+  return picked;
 }
 
 function shuffleArr(arr) {
@@ -372,6 +380,24 @@ export default function App() {
           </div>
         </div>
       </main>
+      <footer>
+        <p>
+          by ferytell{" "}
+          <a
+            href="https://www.linkedin.com/in/feri-ginanjar-ferytell/"
+            target="_blank"
+          >
+            Linkedin
+          </a>
+          .
+          <a
+            href="https://ferytell.github.io/react-portofolio/"
+            target="_blank"
+          >
+            GitHub
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

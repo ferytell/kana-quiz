@@ -54,8 +54,8 @@ export const hiragana = [
   // W
   { kana: "わ", romaji: "wa", group: "w" },
   { kana: "を", romaji: "wo", group: "w" },
-  // N standalone
-  { kana: "ん", romaji: "n", group: "n-standalone" },
+  // W
+  { kana: "ん", romaji: "n", group: "w" },
   // G
   { kana: "が", romaji: "ga", group: "g" },
   { kana: "ぎ", romaji: "gi", group: "g" },
@@ -134,7 +134,7 @@ export const katakana = [
   { kana: "ロ", romaji: "ro", group: "r" },
   { kana: "ワ", romaji: "wa", group: "w" },
   { kana: "ヲ", romaji: "wo", group: "w" },
-  { kana: "ン", romaji: "n", group: "n-standalone" },
+  { kana: "ン", romaji: "n", group: "w" },
   { kana: "ガ", romaji: "ga", group: "g" },
   { kana: "ギ", romaji: "gi", group: "g" },
   { kana: "グ", romaji: "gu", group: "g" },
@@ -172,8 +172,7 @@ export const groupLabels = {
   m: "M (ma mi mu me mo)",
   y: "Y (ya yu yo)",
   r: "R (ra ri ru re ro)",
-  w: "W (wa wo)",
-  "n-standalone": "N (n)",
+  w: "W (wa wo n)",
   g: "G (ga gi gu ge go)",
   z: "Z (za ji zu ze zo)",
   d: "D (da ji zu de do)",
@@ -186,6 +185,10 @@ export const fonts = [
   { id: "serif", label: "Serif", family: "'Noto Serif JP', serif" },
   { id: "mincho", label: "Mincho", family: "'BIZ UDMincho', serif" },
   { id: "gothic", label: "Gothic", family: "'M PLUS 1p', sans-serif" },
-  { id: "rounded", label: "Rounded", family: "'M PLUS Rounded 1c', sans-serif" },
+  {
+    id: "rounded",
+    label: "Rounded",
+    family: "'M PLUS Rounded 1c', sans-serif",
+  },
   { id: "handwritten", label: "Handwritten", family: "'Yomogi', cursive" },
 ];

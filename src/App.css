@@ -504,3 +504,21 @@ body {
 .group-item.checked .group-label {
   color: var(--text);
 }
+
+footer {
+  text-align: center;
+  padding: 25px 20px;
+  color: var(--text);
+  font-size: 14px;
+  border-top: 1px solid var(--accent);
+  margin-top: 50px;
+}
+
+footer a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
