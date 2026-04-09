@@ -86,6 +86,52 @@ export const hiragana = [
   { kana: "ぷ", romaji: "pu", group: "p" },
   { kana: "ぺ", romaji: "pe", group: "p" },
   { kana: "ぽ", romaji: "po", group: "p" },
+
+  // COMBINATIONS (Digraphs) - Hiragana
+  // K + y combinations
+  { kana: "きゃ", romaji: "kya", group: "combinationsK" },
+  { kana: "きゅ", romaji: "kyu", group: "combinationsK" },
+  { kana: "きょ", romaji: "kyo", group: "combinationsK" },
+  // S + y combinations
+  { kana: "しゃ", romaji: "sha", group: "combinationsS" },
+  { kana: "しゅ", romaji: "shu", group: "combinationsS" },
+  { kana: "しょ", romaji: "sho", group: "combinationsS" },
+  // C/T + y combinations
+  { kana: "ちゃ", romaji: "cha", group: "combinationsC" },
+  { kana: "ちゅ", romaji: "chu", group: "combinationsC" },
+  { kana: "ちょ", romaji: "cho", group: "combinationsC" },
+  // N + y combinations
+  { kana: "にゃ", romaji: "nya", group: "combinationsN" },
+  { kana: "にゅ", romaji: "nyu", group: "combinationsN" },
+  { kana: "にょ", romaji: "nyo", group: "combinationsN" },
+  // H + y combinations
+  { kana: "ひゃ", romaji: "hya", group: "combinationsH" },
+  { kana: "ひゅ", romaji: "hyu", group: "combinationsH" },
+  { kana: "ひょ", romaji: "hyo", group: "combinationsH" },
+  // M + y combinations
+  { kana: "みゃ", romaji: "mya", group: "combinationsM" },
+  { kana: "みゅ", romaji: "myu", group: "combinationsM" },
+  { kana: "みょ", romaji: "myo", group: "combinationsM" },
+  // R + y combinations
+  { kana: "りゃ", romaji: "rya", group: "combinationsR" },
+  { kana: "りゅ", romaji: "ryu", group: "combinationsR" },
+  { kana: "りょ", romaji: "ryo", group: "combinationsR" },
+  // G + y combinations (voiced)
+  { kana: "ぎゃ", romaji: "gya", group: "combinationsG" },
+  { kana: "ぎゅ", romaji: "gyu", group: "combinationsG" },
+  { kana: "ぎょ", romaji: "gyo", group: "combinationsG" },
+  // J/Z + y combinations
+  { kana: "じゃ", romaji: "ja", group: "combinationsJ" },
+  { kana: "じゅ", romaji: "ju", group: "combinationsJ" },
+  { kana: "じょ", romaji: "jo", group: "combinationsJ" },
+  // B + y combinations
+  { kana: "びゃ", romaji: "bya", group: "combinationsB" },
+  { kana: "びゅ", romaji: "byu", group: "combinationsB" },
+  { kana: "びょ", romaji: "byo", group: "combinationsB" },
+  // P + y combinations
+  { kana: "ぴゃ", romaji: "pya", group: "combinationsP" },
+  { kana: "ぴゅ", romaji: "pyu", group: "combinationsP" },
+  { kana: "ぴょ", romaji: "pyo", group: "combinationsP" },
 ];
 
 export const katakana = [
@@ -160,6 +206,41 @@ export const katakana = [
   { kana: "プ", romaji: "pu", group: "p" },
   { kana: "ペ", romaji: "pe", group: "p" },
   { kana: "ポ", romaji: "po", group: "p" },
+
+  // COMBINATIONS (Digraphs) - Katakana
+  { kana: "キャ", romaji: "kya", group: "combinationsK" },
+  { kana: "キュ", romaji: "kyu", group: "combinationsK" },
+  { kana: "キョ", romaji: "kyo", group: "combinationsK" },
+  { kana: "シャ", romaji: "sha", group: "combinationsS" },
+  { kana: "シュ", romaji: "shu", group: "combinationsS" },
+  { kana: "ショ", romaji: "sho", group: "combinationsS" },
+  { kana: "チャ", romaji: "cha", group: "combinationsT" },
+  { kana: "チュ", romaji: "chu", group: "combinationsT" },
+  { kana: "チョ", romaji: "cho", group: "combinationsT" },
+  { kana: "ニャ", romaji: "nya", group: "combinationsN" },
+  { kana: "ニュ", romaji: "nyu", group: "combinationsN" },
+  { kana: "ニョ", romaji: "nyo", group: "combinationsN" },
+  { kana: "ヒャ", romaji: "hya", group: "combinationsH" },
+  { kana: "ヒュ", romaji: "hyu", group: "combinationsH" },
+  { kana: "ヒョ", romaji: "hyo", group: "combinationsH" },
+  { kana: "ミャ", romaji: "mya", group: "combinationsM" },
+  { kana: "ミュ", romaji: "myu", group: "combinationsM" },
+  { kana: "ミョ", romaji: "myo", group: "combinationsM" },
+  { kana: "リャ", romaji: "rya", group: "combinationsR" },
+  { kana: "リュ", romaji: "ryu", group: "combinationsR" },
+  { kana: "リョ", romaji: "ryo", group: "combinationsR" },
+  { kana: "ギャ", romaji: "gya", group: "combinationsG" },
+  { kana: "ギュ", romaji: "gyu", group: "combinationsG" },
+  { kana: "ギョ", romaji: "gyo", group: "combinationsG" },
+  { kana: "ジャ", romaji: "ja", group: "combinationsJ" },
+  { kana: "ジュ", romaji: "ju", group: "combinationsJ" },
+  { kana: "ジョ", romaji: "jo", group: "combinationsJ" },
+  { kana: "ビャ", romaji: "bya", group: "combinationsB" },
+  { kana: "ビュ", romaji: "byu", group: "combinationsB" },
+  { kana: "ビョ", romaji: "byo", group: "combinationsB" },
+  { kana: "ピャ", romaji: "pya", group: "combinationsP" },
+  { kana: "ピュ", romaji: "pyu", group: "combinationsP" },
+  { kana: "ピョ", romaji: "pyo", group: "combinationsP" },
 ];
 
 export const groupLabels = {
@@ -178,6 +259,17 @@ export const groupLabels = {
   d: "D (da ji zu de do)",
   b: "B (ba bi bu be bo)",
   p: "P (pa pi pu pe po)",
+  combinationsK: "Yōon (kya, kyu, kyo)",
+  combinationsS: "Yōon (sha, shu, sho)",
+  combinationsT: "Yōon (cha, chu, cho)",
+  combinationsN: "Yōon (nya, nyu, nyo)",
+  combinationsH: "Yōon (hya, hyu, hyo)",
+  combinationsM: "Yōon (mya, myu, myo)",
+  combinationsR: "Yōon (rya, ryu, ryo)",
+  combinationsG: "Yōon (gya, gyu, gyo)",
+  combinationsJ: "Yōon (ja, ju, jo)",
+  combinationsB: "Yōon (bya, byu, byo)",
+  combinationsP: "Yōon (pya, pyu, pyo)",
 };
 
 export const fonts = [
