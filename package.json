@@ -3,6 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "description": "A simple quiz app to help you learn Japanese kana (hiragana and katakana).",
+  "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
