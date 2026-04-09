@@ -504,6 +504,12 @@ export default function App() {
             GitHub
           </a>
         </p>
+        <p>
+          also try{" "}
+          <a href="https://ferytell.github.io/hangul-quiz/" target="_blank">
+            hangul-quiz
+          </a>
+        </p>
       </footer>
     </div>
   );
