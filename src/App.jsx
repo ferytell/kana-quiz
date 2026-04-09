@@ -12,12 +12,7 @@ function pickRandom(arr) {
   } while (picked === lastPicked && arr.length > 1); // Avoid same as last if possible
 
   lastPicked = picked;
-  console.log("Picked:", picked);
   return picked;
-}
-
-function shuffleArr(arr) {
-  return [...arr].sort(() => Math.random() - 0.5);
 }
 
 export default function App() {
@@ -47,6 +42,37 @@ export default function App() {
   );
   const [totalAnswered, setTotalAnswered] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
+  // Add new state for combination mode
+  const [combinationLength, setCombinationLength] = useState(2); // 2 or 3 character combinations
+  const [combinationMode, setCombinationMode] = useState(false); // Toggle between single kana and combinations
+
+  // Function to generate a random combination from the pool
+  const getRandomCombination = useCallback((pool, length) => {
+    if (pool.length === 0) return null;
+
+    // Get random starting point
+    const startIndex = Math.floor(Math.random() * pool.length);
+    const combination = [];
+    let romaji = "";
+
+    for (let i = 0; i < length && startIndex + i < pool.length; i++) {
+      const kana = pool[startIndex + i];
+      combination.push(kana.kana);
+      romaji += kana.romaji;
+    }
+
+    // If we couldn't get enough characters, try again from beginning
+    if (combination.length < length) {
+      return null;
+      //return getRandomCombination(pool, length);
+    }
+
+    return {
+      kana: combination.join(""),
+      romaji: romaji,
+      isCombination: true,
+    };
+  }, []);
 
   const inputRef = useRef(null);
 
@@ -61,19 +87,66 @@ export default function App() {
     return pool;
   }, [enabledHiraganaGroups, enabledKatakanaGroups]);
 
+  // Modify nextCard to handle combinations
   const nextCard = useCallback(() => {
     const pool = getPool();
     if (pool.length === 0) {
       setCurrent(null);
       return;
     }
+
     const font = fonts.find((f) => f.id === activeFont) || fonts[0];
-    const card = pickRandom(pool);
+    let card;
+
+    if (combinationMode && combinationLength > 1) {
+      // Generate random combination
+      card = getRandomCombination(pool, combinationLength);
+      if (!card) card = pickRandom(pool);
+    } else {
+      // Single kana mode
+      card = pickRandom(pool);
+    }
+
     setCurrent({ ...card, fontFamily: font.family });
     setInput("");
     setStatus("idle");
     setTimeout(() => inputRef.current?.focus(), 50);
-  }, [getPool, activeFont]);
+  }, [
+    getPool,
+    activeFont,
+    combinationMode,
+    combinationLength,
+    getRandomCombination,
+  ]);
+
+  // Add controls in your UI (add this to the stats-row or header)
+  const combinationControls = (
+    <div className="combination-controls">
+      <label className="combine-toggle">
+        <input
+          type="checkbox"
+          checked={combinationMode}
+          onChange={(e) => {
+            setCombinationMode(e.target.checked);
+            // Reset streak when changing modes
+            setStreak(0);
+          }}
+        />
+        Combine Mode
+      </label>
+      {combinationMode && (
+        <select
+          value={combinationLength}
+          onChange={(e) => setCombinationLength(parseInt(e.target.value))}
+          className="combine-length"
+        >
+          <option value={2}>2 Characters</option>
+          <option value={3}>3 Characters</option>
+          <option value={4}>4 Characters</option>
+        </select>
+      )}
+    </div>
+  );
 
   useEffect(() => {
     nextCard();
@@ -299,6 +372,40 @@ export default function App() {
         </div>
 
         <div className="selector-panel">
+          <div className="selector-section">
+            <div className="section-header">
+              <h2>
+                Combination <span className="kana-label">組み合わせ</span>
+              </h2>
+            </div>
+            <div className="combination-controls">
+              <label className="combine-toggle">
+                <input
+                  type="checkbox"
+                  checked={combinationMode}
+                  onChange={(e) => {
+                    setCombinationMode(e.target.checked);
+                    setStreak(0);
+                  }}
+                />
+                <span>Combine</span>
+              </label>
+              {combinationMode && (
+                <select
+                  value={combinationLength}
+                  onChange={(e) =>
+                    setCombinationLength(parseInt(e.target.value))
+                  }
+                  className="combine-length"
+                >
+                  <option value={2}>2 chars</option>
+                  <option value={3}>3 chars</option>
+                  <option value={4}>4 chars</option>
+                </select>
+              )}
+            </div>
+          </div>
+
           <div className="selector-section">
             <div className="section-header">
               <h2>

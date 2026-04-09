@@ -382,6 +382,96 @@ body {
   color: var(--text3);
 }
 
+/* === COMBINATION CONTROLS === */
+.combination-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  grid-column: span 4;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+@media (min-width: 640px) {
+  .combination-controls {
+    grid-column: auto;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+.combine-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--bg3);
+  color: var(--text2);
+  transition: all 0.15s;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border2);
+}
+
+.combine-toggle:hover {
+  background: var(--check-bg);
+  color: var(--accent2);
+  border-color: var(--accent);
+}
+
+.combine-toggle input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  margin: 0;
+}
+
+.combine-length {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 0.75rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  outline: none;
+}
+
+.combine-length:hover {
+  border-color: var(--accent);
+  background: var(--check-bg);
+}
+
+.combine-length:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(124, 108, 250, 0.2);
+}
+
+/* Optional: Add a small badge to show mode in kana display */
+.combination-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
 /* === SELECTOR PANEL === */
 .selector-panel {
   display: flex;
